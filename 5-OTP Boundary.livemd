@@ -1,0 +1,54 @@
+# 5. Boundary: GenServer Clock
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.6.2"}
+])
+
+import IEx.Helpers
+```
+
+## Notes
+
+```elixir
+h(GenServer)
+```
+
+```elixir
+h(Kino.start_child() / 1)
+```
+
+## Lab: GenServer Clock
+
+```elixir
+defmodule Clock do
+  use GenServer
+
+  # Callbacks
+
+  @impl true
+  def init({adapter, options}) do
+    # periodically send ticks
+    {:ok, adapter.new(options)}
+  end
+
+  @impl true
+  def handle_call(:tick, _from, clock) do
+    {:reply, :rendered_clock, :next_clock_state}
+  end
+
+  def start_link(options) do
+    GenServer.start_link(__MODULE__, options, name: __MODULE__)
+  end
+
+  def tick() do
+    GenServer.call(__MODULE__, :tick)
+  end
+end
+```
+
+## Lab: Kino Lifecycle Clock
+
+```elixir
+# start your GenServer here
+```

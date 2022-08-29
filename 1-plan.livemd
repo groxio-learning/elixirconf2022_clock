@@ -1,0 +1,34 @@
+# 1. Plan
+
+## Overview
+
+* Prototype with livebook
+* Understand Hardware
+* Build a functional core
+* Animate the clock in a boundary layer
+* Wrap the core in OTP
+* Burn the project in a clock
+
+## Demo, Hardware, Spec Sheet
+
+* Livebook Dependencies
+* SPI
+* Spec Sheet
+
+## CRC: Build a Core
+
+* CRC is a strategy for isolating pure functions in a core.
+* CRC organizes three types of functions around a central datatype
+
+## Wrap in Adapter Layer
+
+* Adapters allow us to use the same core in:
+  -- host tests
+  -- host hardware
+  -- target hardware
+
+## Animate with a Boundary
+
+## Wrap in OTP
+
+## Burn a Project

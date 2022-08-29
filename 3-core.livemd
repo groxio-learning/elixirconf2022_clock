@@ -1,0 +1,29 @@
+# 3. Core
+
+```elixir
+import IEx.Helpers
+```
+
+## CRC
+
+Your notes
+
+```elixir
+h(Enum.reduce())
+```
+
+```elixir
+h(Kernel.|>())
+```
+
+## Layers
+
+your notes
+
+## Counter Core
+
+...lab exercise...
+
+## Clock Core
+
+...lab exercise...

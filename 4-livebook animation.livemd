@@ -1,0 +1,89 @@
+# 4. Livebook Animation
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.6.2"}
+])
+
+import IEx.Helpers
+```
+
+## Your Notes
+
+```elixir
+h(Kino.animate() / 3)
+```
+
+## Move Core to Mix Project
+
+configure livebook to use mix project
+
+## Adapters
+
+your notes
+
+```elixir
+defmodule BinaryClock.Adapter.Dev do
+  # struct with hardware and soft state
+  defstruct [:spi, :clock]
+
+  def new(args) do
+    # create initial state
+    initial_acc = :some_state
+    initial_acc
+  end
+
+  def tick(acc) do
+    next_acc = :compute_next_accumulator
+    next_acc
+  end
+
+  def show(acc) do
+    # convert the state to a string using core's converter
+    IO.puts(inspect(acc))
+  end
+end
+```
+
+```elixir
+defmodule BinaryClock.Adapter.Test do
+  def new(args) do
+    # create initial state
+    initial_acc = :some_state
+    initial_acc
+  end
+
+  def tick(acc) do
+    next_acc = :compute_next_accumulator
+    next_acc
+  end
+
+  def show(acc) do
+    # return some state that's easy to verify
+    IO.puts(inspect(acc))
+  end
+end
+```
+
+```elixir
+defmodule BinaryClock.Adapter.Target do
+  def new(args) do
+    # set up hardware and create initial state
+    # open spi
+    initial_acc = :some_state
+    initial_acc
+  end
+
+  def tick(acc) do
+    next_acc = :compute_next_accumulator
+    next_acc
+  end
+
+  def show(acc) do
+    # write spi
+    IO.puts(inspect(acc))
+  end
+end
+```
+
+## Lab: Clock with livebook

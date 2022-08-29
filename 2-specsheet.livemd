@@ -1,0 +1,107 @@
+# 2. Spec Sheet
+
+## Read the Spec Sheet
+
+* https://github.com/fhunleth/binary_clock/tree/main/datasheets
+
+* https://github.com/fhunleth/binary_clock/blob/main/hw/Schematic_binary_clock.pdf
+
+## Elixir Number Systems, Lists and Binaries
+
+```elixir
+for c <- [72, 101, 108, 108, 111], into: "", do: <<c>>
+```
+
+```elixir
+# underscores are cosmetic, placeholders
+123_456
+```
+
+```elixir
+# decimal
+000_123
+```
+
+```elixir
+# hex: base 16
+0x00FF
+```
+
+```elixir
+# binary
+0b0000_0000_1111_1111
+```
+
+## Connect the Device
+
+### Mix Install
+
+<!-- livebook:{"break_markdown":true} -->
+
+Generally at the top of a LiveBook
+
+<!-- livebook:{"break_markdown":true} -->
+
+```
+Mix.install([
+  {:circuits_spi, "~> 1.3"}
+])
+```
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Open the port
+
+* port name: `spidev0.0`
+* least significant bit first (`lsb_first: true`)
+* SPI mode: `3` (`0` is default; see hexdocs for `Circuits.SPI.open/2`)
+
+<!-- livebook:{"break_markdown":true} -->
+
+```
+{:ok, spi} = SPI.open("spidev0.0", mode: 3, lsb_first: true)
+```
+
+## Control One LED1
+
+1. Send the command to set the display mode
+2. Send the command to write to data memory
+3. Send the data bytes (what LEDs should be on and off)
+4. Send the command to turn the LEDs on and set their brightness
+
+### Display Mode
+
+The display mode is documented in the table on page 3. Binary: 2 or `0b00000010`.
+
+```
+SPI.transfer(spi, <<0b00000010>>)
+```
+
+### Write Data Command
+
+Write data to memory. Next is to send the command to write data. The flow chart says to send 0x40 and this can be checked on page 3 as well:
+
+```
+SPI.transfer(spi, <<0x40>>)
+```
+
+### Write Data Values
+
+Next is to send the command to store bytes at address 0 and then the LED state. The flowchart says the command to do this is 0xc0 and this can be confirmed on page 4. The bottom of page 4 has a table for how the LED bytes are laid out. It could more simply be written that for 6 columns (aka digits), the bits in the first byte are the 8 possible LEDs in that column. The second byte is zero.
+
+For example, if we want the binary clock to show 1, 2, 3, 4, 5, 6 in binary, we'd send this:
+
+```
+SPI.transfer(spi, <<0xC0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0>>)
+
+```
+
+### Set brightness
+
+The final step is to send the command to turn the TM1620 on and set the brightness. This is shown in the table at the bottom of page 3. The dimmest value is 0x88. The brightest value is 0x8f. 0x80 is off.
+
+```
+SPI.transfer(spi, <<0x88>>)
+```
+
+The lights should be on. Hopefully it shows what you'd expect. If you want to change it, modify the 0xc0 command above.

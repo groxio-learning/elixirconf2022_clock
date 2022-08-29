@@ -1,0 +1,7 @@
+# 6. Burn and Configure
+
+## Overview
+
+* Start a Nerves project with mix nerves.new with --sup
+* Move your cores and GenServer to the project
+* Move your child spec to `application.ex`
