@@ -34,7 +34,7 @@ for c <- [72, 101, 108, 108, 111], into: "", do: <<c>>
 
 ## Connect the Device
 
-### Mix Install
+### Mix Install and alias Module
 
 <!-- livebook:{"break_markdown":true} -->
 
@@ -46,6 +46,7 @@ Generally at the top of a LiveBook
 Mix.install([
   {:circuits_spi, "~> 1.3"}
 ])
+alias Circuits.SPI
 ```
 
 <!-- livebook:{"break_markdown":true} -->
