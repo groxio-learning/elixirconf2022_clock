@@ -2,6 +2,6 @@
 
 ## Overview
 
-* Start a Nerves project with mix nerves.new with --sup
+* Start a Nerves project with mix nerves.new clock
 * Move your cores and GenServer to the project
 * Move your child spec to `application.ex`
